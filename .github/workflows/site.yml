@@ -26,11 +26,6 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
-      env:
-        GITHUB_TOKEN: ${{ secrets.MOPOPACKAGES }}
-        NPM_TOKEN: ${{ secrets.MOPOPACKAGES }}
-        GH_TOKEN: ${{ secrets.MOPOPACKAGES }}
-        MOPOPACKAGES: ${{ secrets.MOPOPACKAGES }}
     - run: ng build
     - name: Release
       env:
