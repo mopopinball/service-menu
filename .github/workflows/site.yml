@@ -28,6 +28,7 @@ jobs:
     - run: npm ci
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - run: ng build
     - name: Release
       env:
