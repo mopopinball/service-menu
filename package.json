@@ -9,6 +9,7 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },
+  "description": "",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
