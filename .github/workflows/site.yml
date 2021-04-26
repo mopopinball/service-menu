@@ -40,7 +40,7 @@ jobs:
       - name: Release
         env:
           MOPOPACKAGES: ${{ secrets.MOPOPAK }}
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.MOPOPACKAGES }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run semantic-release
