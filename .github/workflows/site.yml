@@ -39,6 +39,7 @@ jobs:
       - run: ng build
       - name: Release
         env:
+          MOPOPACKAGES: ${{ secrets.MOPOPAK }}
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
