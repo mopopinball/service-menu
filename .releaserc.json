@@ -4,9 +4,8 @@
         "@semantic-release/commit-analyzer",
         "@semantic-release/release-notes-generator",
         ["@semantic-release/github", {
-            "assets": "dist"
+            "assets": ["dist/**"]
         }],
-        "@semantic-release/npm",
         ["@semantic-release/git", {
             "assets": "package.json"
         }]
