@@ -98,7 +98,8 @@ export class AppComponent implements OnDestroy {
         this.http.post('/update/check', {}).subscribe((update: AvailableUpdate) => {
             this.availableUpdate = {
                 system: update.system,
-                pics: update.pics
+                pics: update.pics,
+                serviceMenu: update.serviceMenu
             };
         });
     }
@@ -106,7 +107,7 @@ export class AppComponent implements OnDestroy {
     applySystemUpdate(release: GithubRelease): void {
         this.systemUpdateInProgress = true;
         this.http.post('/update/apply', release).subscribe(() => {
-            this.availableUpdate.system = null;
+            this.availableUpdate = null;
             this.systemUpdateInProgress = false;
         });
     }
