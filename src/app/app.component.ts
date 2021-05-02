@@ -8,6 +8,7 @@ import {GithubRelease} from '@mopopinball/engine/src/system/github-release';
 import {AvailableUpdate} from '@mopopinball/engine/src/system/server/available-update';
 import {UpdateDetails} from '@mopopinball/engine/src/system/server/update-details';
 import { HttpClient } from '@angular/common/http';
+import {version} from 'package.json';
 
 @Component({
     selector: 'app-root',
