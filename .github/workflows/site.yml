@@ -32,7 +32,7 @@ jobs:
       - run: npm install -g npm@7
       - run: npm config set //npm.pkg.github.com/:_authToken=${{ secrets.MOPOPAK }}
       - name: Install Angular
-        run: npm install -g @angular/cli@10
+        run: npm install -g @angular/cli@10.2.0
       - run: npm ci
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
