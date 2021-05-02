@@ -28,12 +28,29 @@ export class AppComponent implements OnDestroy {
     rows = [0,1,2,3,4,5,6,7,8];
     cols = [1,2,3,4,5,6,7,8];
     systemUpdateInProgress = false;
-    private _mqttService = connect(`ws://${document.location.hostname}`);
+    private _mqttService = connect(`ws://${document.location.hostname}:9001`);
+    // private _mqttService = connect(`ws://mopo-derp:9001`);
+    // private _mqttService;
 
     constructor(private http: HttpClient) {
-        this._mqttService.subscribe('mopo/info/general', (topic, message) => {
-            this.info = JSON.parse(message.toString());
+        // this._mqttService = connect(`ws://mopo-derp:9001`);
+        this._mqttService.on('connect',  () => {
+            console.log('CON');
+
+            this._mqttService.subscribe('mopo/info/general', (topic, message) => {
+                this.info = JSON.parse(message.toString());
+            });
+
+            this._mqttService.subscribe('presence', function (err) {
+            //   if (!err) {
+            //     client.publish('presence', 'Hello mqtt')
+            //   }
+            })
+          })
+        this._mqttService.on('message', (topic, message) => {
+            console.log(`${topic}: ${message}`);
         });
+        
         // this._mqttService.observe('mopo/info/general').subscribe((message: IMqttMessage) => {
         //     this.info = JSON.parse(message.payload.toString());
         // });
