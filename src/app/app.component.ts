@@ -9,6 +9,7 @@ import {UpdateDetails} from '@mopopinball/engine/src/system/server/update-detail
 import { HttpClient } from '@angular/common/http';
 import {version} from 'package.json';
 import { IMqttMessage, MqttService } from 'ngx-mqtt';
+import {coerce, gt} from 'semver';
 
 @Component({
     selector: 'app-root',
@@ -96,19 +97,29 @@ export class AppComponent implements OnDestroy {
     }
 
     checkForUpdate(): void {
+        this.systemUpdateInProgress = true;
         this.http.post('/update/check', {}).subscribe((update: AvailableUpdate) => {
             this.availableUpdate = {
                 system: update.system,
                 pics: update.pics,
-                serviceMenu: update.serviceMenu
+                serviceMenu: null
             };
+            const remoteServiceMenuVer = coerce(update.serviceMenu.name);
+            if (gt(remoteServiceMenuVer, version)) {
+                this.availableUpdate.serviceMenu = update.serviceMenu;
+            }
+            this.systemUpdateInProgress = false;
+        }, () => {
+            this.systemUpdateInProgress = false;
         });
     }
 
-    applySystemUpdate(release: GithubRelease): void {
+    applyUpdate(release: GithubRelease): void {
         this.systemUpdateInProgress = true;
         this.http.post('/update/apply', release).subscribe(() => {
             this.availableUpdate = null;
+            this.systemUpdateInProgress = false;
+        }, () => {
             this.systemUpdateInProgress = false;
         });
     }

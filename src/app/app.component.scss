@@ -1,5 +1,6 @@
 header {
     display: flex;
+    justify-content: space-between;
 
     img {
         margin-right: 1em;
@@ -11,6 +12,10 @@ header {
 
     h2, h3 {
         margin-left: 1em;
+    }
+
+    .actions {
+        text-align: right;
     }
 }
 
