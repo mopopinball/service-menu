@@ -30,7 +30,7 @@
     "@angular/router": "~11.2.12",
     "@fortawesome/fontawesome-free": "^5.15.1",
     "@mopopinball/engine": "^1.0.0-beta.62",
-    "mqtt": "^4.2.1",
+    "ngx-mqtt": "8.0.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
