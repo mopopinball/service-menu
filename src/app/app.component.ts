@@ -29,6 +29,7 @@ export class AppComponent implements OnDestroy {
     rows = [0,1,2,3,4,5,6,7,8];
     cols = [1,2,3,4,5,6,7,8];
     systemUpdateInProgress = false;
+    menuVersion: string = version;
 
     constructor(private http: HttpClient, private _mqttService: MqttService) {
         this._mqttService.observe('mopo/info/general').subscribe((message: IMqttMessage) => {
@@ -117,8 +118,13 @@ export class AppComponent implements OnDestroy {
     applyUpdate(release: GithubRelease): void {
         this.systemUpdateInProgress = true;
         this.http.post('/update/apply', release).subscribe(() => {
+            if (release === this.availableUpdate.serviceMenu) {
+                window.location.reload();
+                return;
+            }
             this.availableUpdate = null;
             this.systemUpdateInProgress = false;
+            
         }, () => {
             this.systemUpdateInProgress = false;
         });

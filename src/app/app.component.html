@@ -6,13 +6,22 @@
         <h2>{{info?.gameName}}</h2>
     </div>
     <div class="actions">
-        <div>{{info?.version}}<button (click)="checkForUpdate()" [disabled]="systemUpdateInProgress">Check</button></div>
-        <div *ngIf="availableUpdate?.system">Version {{availableUpdate.system.name}} is available!
-            <button (click)="applyUpdate(availableUpdate.system)" [disabled]="systemUpdateInProgress">Apply</button>
+        <div>
+            Engine: {{info?.version}}
+            <span *ngIf="availableUpdate?.system">
+                Engine {{availableUpdate?.system.name}} is available!
+                <button (click)="applyUpdate(availableUpdate.system)" [disabled]="systemUpdateInProgress">Apply</button>
+            </span>
         </div>
-        <div *ngIf="availableUpdate?.serviceMenu">Service Menu {{availableUpdate.serviceMenu.name}} is available!
-            <button (click)="applyUpdate(availableUpdate.serviceMenu)" [disabled]="systemUpdateInProgress">Apply</button>
+        <div>
+            Menu: {{menuVersion}}
+            <span *ngIf="availableUpdate?.serviceMenu">
+                Service Menu {{availableUpdate?.serviceMenu.name}} is available!
+                <button (click)="applyUpdate(availableUpdate.serviceMenu)" [disabled]="systemUpdateInProgress">Apply</button>
+            </span>
+            
         </div>
+        <div><button (click)="checkForUpdate()" [disabled]="systemUpdateInProgress">Check for Update</button></div>
         <div *ngIf="fps">{{fps?.fps}}fps ({{fps?.loopTime}}ms)</div>
     </div>
 </header>
