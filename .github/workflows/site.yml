@@ -37,12 +37,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MOPOPACKAGES: ${{ secrets.MOPOPAK }}
-      - run: ng build --prod
-      - run: tar cvzf dist.tar.gz ./dist
+      - run: npm run build
       - name: Release
         env:
-          MOPOPACKAGES: ${{ secrets.MOPOPAK }}
           GH_TOKEN: ${{ secrets.MOPOPACKAGES }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
