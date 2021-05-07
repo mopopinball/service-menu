@@ -106,7 +106,8 @@ export class AppComponent implements OnDestroy {
                 serviceMenu: null
             };
             const remoteServiceMenuVer = coerce(update.serviceMenu.name);
-            if (gt(remoteServiceMenuVer, version)) {
+            const localServiceMenuVer = coerce(version)
+            if (gt(remoteServiceMenuVer, localServiceMenuVer)) {
                 this.availableUpdate.serviceMenu = update.serviceMenu;
             }
             this.systemUpdateInProgress = false;
