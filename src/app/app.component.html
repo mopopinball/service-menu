@@ -5,6 +5,18 @@
         <h1>{{info?.name}} Serivce Menu</h1>
         <h2>{{info?.gameName}}</h2>
     </div>
+    <div *ngIf="debuggingEnabled" class="debugging">
+        <span class="title">Debugging is enabled</span>
+        <div>
+            Upload a rule set:
+            <input type="file"
+                #fileload
+                (change)="load($event.target.files)">
+            <div class="notice">
+                Design you own rules with the <a href="http://url.com" target="_blank">MOPO Designer</a>!
+            </div>
+        </div>
+    </div>
     <div class="actions">
         <div>
             Engine: {{info?.version}}

@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { InfoMqttMessage } from "@mopopinball/engine/src/system/messages"
 import {ClientDevice} from '@mopopinball/engine/src/system/server/client-device';
@@ -30,6 +30,8 @@ export class AppComponent implements OnDestroy {
     cols = [1,2,3,4,5,6,7,8];
     systemUpdateInProgress = false;
     menuVersion: string = version;
+    debuggingEnabled: boolean = true;
+    @ViewChild('fileload') uploadInput: ElementRef;
 
     constructor(private http: HttpClient, private _mqttService: MqttService) {
         this._mqttService.observe('mopo/info/general').subscribe((message: IMqttMessage) => {
@@ -71,6 +73,8 @@ export class AppComponent implements OnDestroy {
         // this._mqttService.observe('mopo/devices/dips/all/state').subscribe((message: IMqttMessage) => {
         //     this.dips = JSON.parse(message.payload.toString());
         // });
+
+        this.getDebugingStatus();
     }
 
     update(collection: any[], updates: any[]) {
@@ -129,5 +133,22 @@ export class AppComponent implements OnDestroy {
         }, () => {
             this.systemUpdateInProgress = false;
         });
+    }
+
+    getDebugingStatus(): void {
+        this.http.get('/update/ruleEngine/status').subscribe((debugEnabled: boolean) => {
+            this.debuggingEnabled = debugEnabled;
+        });
+    }
+
+    load(files: FileList): void {
+        const file = files.item(0);
+        const fileReader = new FileReader();
+        fileReader.onload = (e) => {
+            const rules = JSON.parse(fileReader.result.toString());
+            this.http.post('/update/ruleEngine/schema', rules).subscribe(); 
+            this.uploadInput.nativeElement.value = '';
+        };
+        fileReader.readAsText(file)
     }
 }
