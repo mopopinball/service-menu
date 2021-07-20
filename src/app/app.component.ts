@@ -107,7 +107,7 @@ export class AppComponent implements OnDestroy {
             this.availableUpdate = {
                 system: update.system,
                 pics: update.pics,
-                serviceMenu: null
+                serviceMenu: null // because the server doesnt know the current ver, it always returns a result
             };
             const remoteServiceMenuVer = coerce(update.serviceMenu.name);
             const localServiceMenuVer = coerce(version)
