@@ -24,6 +24,10 @@ header {
         background: orange;
         border: solid 2px darkorange;
         border-radius: 3px;
+
+        .body {
+            padding: 0.5em 1em;
+        }
         
         span {
             width: 100%;
@@ -35,6 +39,7 @@ header {
 
         .notice {
             font-style: italic;
+            text-transform: initial;
         }
     }
 

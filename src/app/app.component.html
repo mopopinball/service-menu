@@ -7,14 +7,14 @@
     </div>
     <div *ngIf="debuggingEnabled" class="debugging">
         <span class="title">Debugging is enabled</span>
-        <div>
+        <div class="title notice">
+            Design you own rules with the <a href="http://mopo-designer.s3-website-us-east-1.amazonaws.com/" target="_blank">MOPO Designer</a>!
+        </div>
+        <div class="body">
             Upload a rule set:
             <input type="file"
                 #fileload
-                (change)="load($event.target.files)">
-            <div class="notice">
-                Design you own rules with the <a href="http://mopo-designer.s3-website-us-east-1.amazonaws.com/" target="_blank">MOPO Designer</a>!
-            </div>
+                (change)="load($event.target.files)" />
         </div>
     </div>
     <div class="actions">
