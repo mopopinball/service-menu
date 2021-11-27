@@ -92,7 +92,7 @@ export class AppComponent implements OnDestroy {
     }
 
     toggleDevice(device: ClientDevice): void {
-        // this._mqttService.publish('mopo/devices/anytype/anyid/state/update/client', JSON.stringify(device)).subscribe();
+        this._mqttService.publish('mopo/devices/anytype/anyid/state/update/client', JSON.stringify(device)).subscribe();
     }
 
     getSwitch(row: number, col: number): any {
