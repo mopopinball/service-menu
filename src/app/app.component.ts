@@ -43,15 +43,22 @@ export class AppComponent implements OnDestroy {
 
         // Subscribe only long enough to get all initial state, then unsubscribe.
         this.subscription = this._mqttService.observe('mopo/devices/+/all/state').subscribe((message: IMqttMessage) => {
+            const parsedPayload: ClientDevice[] = JSON.parse(message.payload.toString()); 
             switch (message.topic) {
                 case 'mopo/devices/lamps/all/state':
-                    this.lamps = JSON.parse(message.payload.toString());
+                    for (const parsedDevice of parsedPayload) {
+                        this.createOrFetch(parsedDevice, this.lamps).isOn = parsedDevice.isOn;
+                    }
                 break;
                 case 'mopo/devices/coils/all/state':
-                    this.coils = JSON.parse(message.payload.toString());
+                    for (const parsedDevice of parsedPayload) {
+                        this.createOrFetch(parsedDevice, this.coils).isOn = parsedDevice.isOn;
+                    }
                 break;
                 case 'mopo/devices/sounds/all/state':
-                    this.sounds = JSON.parse(message.payload.toString());
+                    for (const parsedDevice of parsedPayload) {
+                        this.createOrFetch(parsedDevice, this.sounds).isOn = parsedDevice.isOn;
+                    }
                 break;
                 case 'mopo/devices/switches/all/state':
                     this.switches = JSON.parse(message.payload.toString());
@@ -77,6 +84,16 @@ export class AppComponent implements OnDestroy {
         this.getDebugingStatus();
     }
 
+    private createOrFetch(item: ClientDevice, collection: ClientDevice[]): ClientDevice {
+        const device = collection.find((c) => c.id === item.id);
+        if(device) {
+            return device;
+        }
+        
+        collection.push(item);
+        return item;
+    }
+
     update(collection: any[], updates: any[]) {
         for (const item of collection) {
             for (const u of updates) {
@@ -92,7 +109,7 @@ export class AppComponent implements OnDestroy {
     }
 
     toggleDevice(device: ClientDevice): void {
-        this._mqttService.publish('mopo/devices/anytype/anyid/state/update/client', JSON.stringify(device)).subscribe();
+        this._mqttService.unsafePublish('mopo/devices/anytype/anyid/state/update/client', JSON.stringify(device));
     }
 
     getSwitch(row: number, col: number): any {
